@@ -1,0 +1,11 @@
+Prima tema pe care am ales-o a fost crearea unei script de tip proxy pentru jocul pwn adventure 3 dar clientul de pe linux nu functioneaza(blocat in checking for updates).In ziua 3 am vorbit cu dumneavoastra pentru schimbarea temei.
+Am urmarit tutorialele urmatoare
+http://www.pwnadventure.com/#server 
+https://github.com/LiveOverflow/PwnAdventure3
+Pentru downloadarea jocului si crearea serverului( au aparut foarte multe erori pe parcurs fapt ce a facut instalearea destul de time-consuming)
+Totodata a fost nevoie citesc urmatoarele tutoriale pentru docker si docker-compose
+https://docs.docker.com/install/linux/docker-ce/ubuntu/
+https://docs.docker.com/install/linux/docker-ce/ubuntu/
+Am instalat clientul pe windows, de unde conexiunea cu serverul de pe linux era posibila
+Am vizionat mai multe din tutorialele sugerate in tema de practica: https://www.youtube.com/watch?v=RDZnlcnmPUA&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG\
+In ultimele 2 ore din zi m-am apucat sa lucrez la ctf-urile de pe picoCtf
