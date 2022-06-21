@@ -1,0 +1,63 @@
+#picoCTF
+
+1. runme.py
+	erick@erick-VirtualBox:~/Downloads$ python3 runme.py 
+	picoCTF{run_s4n1ty_run}
+2. serpentine.py
+	Am modificat linia de cod din scriptul de pyhton la b, am adaugat print_flag()
+	picoCTF{7h3_r04d_l355_7r4v3l3d_ae0b80bd}
+
+3.First Find
+	ls -Ra |grep -z "uber"
+	si am observat urmatorul fisier
+	./adequate_books/more_books/.secret/deeper_secrets/deepest_secrets:
+	.
+	..
+	uber-secret.txt
+	cd ./adequate_books/more_books/.secret/deeper_secrets/deepest_secrets
+	cat uber-secret.txt 
+ 	picoCTF{f1nd_15_f457_ab443fd1}
+4.Big Zip
+	grep -r "pico"	
+	picoCTF{gr3p_15_m4g1c_ef8790dc}
+
+5.Based
+      Dupa mai multe incercari mi- am dat seama ca ordinea in care vin mesajele codificate este binar, octal si hexa
+	Am folosit convertoare online pentru a decodifica cuvintele si am primit flag-ul picoCTF{learning_about_converting_values_02167de8}
+6.Plumbing
+	nc jupiter.challenges.picoctf.org 14291|grep "pico"
+	=>picoCTF{digital_plumb3r_ea8bfec7}
+7.mus1c
+	Am tot incercat sa ma uit la diferite detalii ale fisierului, daca sunt anumite codificari in text insa nimic nu parea sa semene cu un flag
+	M-am uitat la hint-ul oferit de site care vorbea de master the rockstar
+	La prima cautare pe google mi s-a sugerat rockstar programming language
+	Convertit textul arata ceva de genul->114 114 114 111 99 107 110 114 110 48 49 49 51 114
+	L-am trecut prin mai multe convertoare pana sa imi dau seama ca sunt caractere ascii
+	de unde am obtinut flag-ul picoCTF{rrrocknrn0113r}
+
+8.flag_shop
+	analizand codul programul stocheaza un int fara sa fie verificat inputul, cum int are o limita a dimensiunii la valorii foarte mari putem schimba valoarea protofelului in una negativa
+ 	=> putem cumpara flagul 1337
+ 	picoCTF{m0n3y_bag5_68d16363}
+9.crackme.py
+	am editat codul de python si am apelat functia decode_secret(bezos_cc_secret) ce a printat flag-ul
+	picoCTF{1|\/|_4_p34|\|ut_f3bc410e}
+10.keygenme-py
+	Am citit codul de mai multe ori si am observat ca o parte din flag este stocata ca variabila globala
+	si anume key_part_static1_trial =  picoCTF{1n_7h3_|<3y_of_ restul fiind completat cu
+	key_part_dynamic1_trial = "xxxxxxxx"
+	key_part_static2_trial = "}"
+	am folosit cat si grep -z pentru a gasi linia la care se foloseste variabila key_part_static1_trial si key_full_template_trial unde se realiza in principiu o verficiarea de lungime a stringului
+	am adaugat un print pe variabila key_full_template_trial si l-am copiat pentru a il utiliza(am adauga niste printuri in if-uri care ar putea returna flase ca sa fiu sigur ca functia nu se oprea acolo)
+	mai departe se realiza o codare pentru ultimele caractere
+	am copiat comenzile de codare
+	print(hashlib.sha256(username_trial).hexdigest()[4])
+        print(hashlib.sha256(username_trial).hexdigest()[5])
+        print(hashlib.sha256(username_trial).hexdigest()[3])
+        print(hashlib.sha256(username_trial).hexdigest()[6])
+        print(hashlib.sha256(username_trial).hexdigest()[2])
+        print(hashlib.sha256(username_trial).hexdigest()[7])
+        print(hashlib.sha256(username_trial).hexdigest()[1])
+        print(hashlib.sha256(username_trial).hexdigest()[8])
+ 	am inlocuit caracterele codate din flagul anterior si am obtinut flagul:
+	picoCTF{1n_7h3_|<3y_of_ac73dc29} 
