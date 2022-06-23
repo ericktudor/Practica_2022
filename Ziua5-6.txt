@@ -1,0 +1,102 @@
+picoCTF
+
+1. Matryoshka doll
+	unzip pe imagine pana cand primi flag.txt
+	cat flag.txt
+	=>picoCTF{4f11048e83ffc7d342a15bd2309b47de}
+2.tunn3l v1s10n
+	prima data am incercat sa dau o comanda de cat tunn3l_v1s10n | grep "pico" pentru a vedea daca flag-ul este trecut in clar
+	dupa am incercat sa il deschid intr-un editor(gedit) insa programul se bloca
+	urmatorul pas a fost sa verific dimensiunea fisierului comanda:ls -lh tunn3l_v1s10n
+	-rw-rw-r-- 1 erick erick 2,8M
+	pentru un fisier text dimensiunea de 2.8 Mb a parut exagerata
+	automat linux imi sugera ca fisierul sa fie deschis cu BMP image dar venea cu erroarea Could not load image “tunn3l_v1s10n”.BMP image has unsupported header size
+	am gasit urmatorul site care explica continutul header-ului http://www.ece.ualberta.ca/~elliott/ee552/studentAppNotes/2003_w/misc/bmp_file_format/bmp_file_format.htm
+	am cautat cum pot accesa informatiile din header si am gasit urmatoarea postare https://stackoverflow.com/questions/58150200/how-to-change-file-header-in-terminal
+	xxd <tunn3l_v1s10n>hexdump
+	gedit hexdump
+	am cautat imagini dmp similare pe internet https://filesamples.com/formats/bmp
+	cea de sample_1280×853.bmp parea similara ca dimensiune asa ca am incercat sa compare hex-ul celor 2 poze, am copiat diferite parti din zonele de header dar file-ul tot nu s-a deschis
+	https://en.wikipedia.org/wiki/BMP_file_format#:~:text=The%20BMP%20file%20format%2C%20also,and%20OS%2F2%20operating%20systems.
+	pe pagina de wiki am ombservat BM->Windows 3.1x, 95, NT, ... etc.
+	am modificat biti pentru dimensiunea pozei
+	picoCTF{qu1t3_a_v13w_2020}
+
+3.Glory of the Garden
+	cum la ctf-ul anterior am lucrat cu hex-ul pozei prima idee a fost sa ii generez fisierul text
+	xxd <garden.jpg>hexdump
+	gedit hexdump
+	la finalul fisierului se poate observa in ascii un mesaj care indica picoCTF
+	picoCTF{more_than_m33ts_the_3y3eBdBd2cc}
+
+4.Wireshark doo dooo do doo...
+	prima data am incercat sa folosesc acceasi comanda de la ctf-ul anterior xxd dar nu am observat nimic in fisierul hex
+	apoi am instalat si deschis file-ul cu wireshark
+	analyze ->follow->tcp
+	stream->5
+	Gur synt vf cvpbPGS{c33xno00_1_f33_h_qrnqorrs}->ROT13
+	=>The flag is picoCTF{p33kab00_1_s33_u_deadbeef}
+	
+5.GET aHEAD
+	CRT+SHIF+C pentru a dechide web inspector-ul
+	putem vedea codul html si tipurile de actiuni pe care le realizeaza butoanele si anume GET si POST
+	hint-urile sugereaza un al treilea tip de actiune
+	titlul sugereaza comanda HEAD
+	*https://javarevisited.blogspot.com/2015/10/how-to-send-http-request-from-unix-or-linux-curl-wget-example.html
+	*am citit de aici https://www.geeksforgeeks.org/curl-command-in-linux-with-examples/
+	curl -I HEAD -i http://mercury.picoctf.net:34561/
+	picoCTF{r3j3ct_th3_du4l1ty_8f878508}
+6.Cookies
+	am citit de aici:
+	https://www.cookieyes.com/blog/how-to-check-cookies-on-your-website-manually/
+	am intrat in storage unde am gasit un singur cookie cu numele name dupa am incercat sa ii schimb valoarea secure in flase dar refresh-ul paginii se bloca
+	apoi am schimbat valoarea din -1 in 0 si mesajul site-ului s-a schimbat in "I love snickerdoodle cookies!"
+ 	la 1 mesajul a fost:"I love chocolate chip cookies!"
+	am continuat sa cresc valoarea pana cand am ajuns la 18
+	unde a aparut flag-ul:picoCTF{3v3ry1_l0v3s_c00k135_a1f5bdb7}
+7.Insp3ct0r
+	site-ul sugereaza inspect me
+	la finalul codului html se afla prima parte din flag 1/3
+	picoCTF{tru3_d3 
+	schimband tab-urile in debugger am gasit 3/3 din flag
+	_lucky?f10be399}
+	in style editor mycss.css la final comentat se afla 2/3 din flag
+	t3ct1ve_0r_ju5t
+=>picoCTF{tru3_d3t3ct1ve_0r_ju5t_lucky?f10be399}
+
+8.Scavenger Hunt
+	inspect web...
+	o pare din flag se afla la finalul codului html din inspector
+	picoCTF{t
+	in mycss.css se afla  partea a 2 a
+	h4ts_4_l0
+	m-am uitat la campul network si am observat o imagine favicon.ico care accesata ducea catre o pagina cu eroare, am inspecat si pagina respectiva insa nu am gasit nimic
+	in debugger se afla myjs.js
+	am creat un file touch try.js
+	si dupa cu gedit am copiat codul incercand sa il rulez(normal ca nu a mers doar nu am webpage-ul definit pe masina virtuala)
+	am vrut sa il rulez si din consola web-browserului dar nu am reusit
+	pana la urma am sesizat comentariul :How can I keep Google from indexing my website?
+	am citit aici: https://www.ilfusion.com/how-to-prevent-google-from-indexing-certain-web-pages
+	in dreptul fisierele robots.txt scrie ca sunt utilizate pentru a ascunde diferite date
+	am cautat daca pot accesa acest fisier :https://www.contentkingapp.com/academy/robotstxt/faq/how-find-it/
+	am adaugat /robots.txt la finalul link-ului si am gasit t_0f_pl4c a 3 parte din flag 
+	urmatoare sugestie este accesarea unui server apache
+	am cautat documentatia despre serverele apache si tutoriale
+	https://docs.oracle.com/cd/B14099_19/web.1012/q20206/howto/
+	partea 4:3s_2_lO0k
+	urmatorul indiciu a fost modul in care sunt stocate datele pe mac
+	am cautat :mac store information web file browswer
+	https://en.wikipedia.org/wiki/.DS_Store
+	si am obtiunt ultima parte _fa04427c}
+	=>picoCTF{th4ts_4_l0t_0f_pl4c3s_2_lO0k_fa04427c}
+9.where are the robots
+	stiind de fisierul robots.txt de la ctf-ul anterior prima idee a fost
+	https://jupiter.challenges.picoctf.org/problem/60915/robots.txt
+	=>/8028f.html
+	https://jupiter.challenges.picoctf.org/problem/60915/8028f.html
+	=>picoCTF{ca1cu1at1ng_Mach1n3s_8028f}
+10.logon
+	nu am introdus nimic la parola si nume
+	dupa ce am apasat sign in am modificat cookie-ul admin in True
+	=>
+	picoCTF{th3_c0nsp1r4cy_l1v3s_6edb3f5f}
