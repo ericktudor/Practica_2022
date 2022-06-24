@@ -58,5 +58,14 @@ yarn.lock
 	am dat comanda 
 	curl https://jupiter.challenges.picoctf.org/problem/50522/flag --user-agent picobrowser
 	picoCTF{p1c0_s3cr3t_ag3nt_51414fa7}
+6.Power Cookie
+modificat cookie-ul isAdmin value 1
+
+picoCTF{gr4d3_A_c00k13_0d351e23}
+
+7.SQLlite
+	SQL query: SELECT * FROM users WHERE name='admin' or '1=1' AND password='admin' or '1=1'
+	ctrl+SHIFT+c
+	picoCTF{L00k5_l1k3_y0u_solv3d_it_ec8a64c7}
 	
 
